@@ -21,10 +21,6 @@ public class Task_7 extends TestBase {
 
     @Test
     public void task_7() {
-        String elemText;
-        String subElemText;
-        String headerPage;
-        boolean bcheck = false;
 
         driver.get("http://localhost/litecart/admin/");
         driver.findElement(By.name("username")).sendKeys("admin");
@@ -38,34 +34,18 @@ public class Task_7 extends TestBase {
             listMenu.get(i).click();
             WebElement lm = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li")).get(i);
             List<WebElement> listSubMenu = lm.findElements(By.xpath("./ul/li/a/span"));
-            elemText = lm.findElement(By.xpath("./a/span[2]")).getText();
-            headerPage = driver.findElement(By.tagName("h1")).getText();
 
             for (int j=0; j<listSubMenu.size(); j++ ) {
                 listSubMenu.get(j).click();
-
                 // обновляем список элементов подменю
                 listSubMenu = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li/ul/li/a/span"));
-
-                subElemText = listSubMenu.get(j).getText();
-                headerPage = driver.findElement(By.tagName("h1")).getText();
-                if (headerPage.equals(subElemText)) bcheck = true;
-                System.out.println("Проверка :" + bcheck + " [Подменю : "+ subElemText +"][Шапка : "+ headerPage +"]");
-                //Assert.assertTrue(headerPage.equals(subElemText));
-
+                isElementPresent(By.tagName("h1"));
             }
             // если раздел не содержит подразделов
-            if (listSubMenu.size()==0) {
-                //Assert.assertTrue(headerPage.equals(elemText));
-                if (headerPage.equals(elemText)) bcheck = true;
-                System.out.println("Проверка :" + bcheck + " [Подменю : "+ elemText +"][Шапка : "+ headerPage +"]");
-            }
+            if (listMenu.size()==0) isElementPresent(By.tagName("h1"));
             // обновляем список элементов меню
             listMenu = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li"));
         }
-
-
-
 
     }
 }
