@@ -55,7 +55,7 @@ public class TestBase {
         }
 
     // IE
-        driver = new InternetExplorerDriver();
+        //driver = new InternetExplorerDriver();
 
     //FireFox
         //driver = new FirefoxDriver();
@@ -65,7 +65,7 @@ public class TestBase {
         //driver = new FirefoxDriver(options);
 
     // Chrome
-        //driver = new ChromeDriver();
+        driver = new ChromeDriver();
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         tlDriver.set(driver);
