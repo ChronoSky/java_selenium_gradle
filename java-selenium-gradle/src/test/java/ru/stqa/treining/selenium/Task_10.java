@@ -34,14 +34,15 @@ public class Task_10 extends TestBase {
 
         // получили свойство Color у обычной цены
         String mpiRegularPriceColor = сampaignsItem.findElement(By.className("regular-price")).getCssValue("color");
-        mpiRegularPriceColor = mpiRegularPriceColor.replace("rgba(", "");
+        mpiRegularPriceColor = mpiRegularPriceColor.replace("rgba(", ""); // для Chrome
+        mpiRegularPriceColor = mpiRegularPriceColor.replace("rgb(", ""); // для FF
         mpiRegularPriceColor = mpiRegularPriceColor.replace(")", "");
         mpiRegularPriceColor = mpiRegularPriceColor.replace(" ", "");
         aColor = mpiRegularPriceColor.split(",");
         if (Integer.parseInt(aColor[0]) == Integer.parseInt(aColor[1]) && Integer.parseInt(aColor[1]) == Integer.parseInt(aColor[2])) mpiRegularPriceColorIsGray = true;
 
-        // получили размер текста обычной цены
-        double mpiRegularPriceTextSize = Double.parseDouble(сampaignsItem.findElement(By.className("regular-price")).getCssValue("font-size").replace("px" , ""));
+        // получили размер текста обычной цены (px - для Chrome, em - для IE)
+        double mpiRegularPriceTextSize = Double.parseDouble(сampaignsItem.findElement(By.className("regular-price")).getCssValue("font-size").replace("px" , "").replace("em" , ""));
 
         // получили акционную цену товара
         double mpiCampaignPrice =  Double.parseDouble(сampaignsItem.findElement(By.className("campaign-price")).getText().replace("$",""));
@@ -51,14 +52,15 @@ public class Task_10 extends TestBase {
 
         // получили свойство Color у акционной цены
         String mpiCampaignPriceColor = сampaignsItem.findElement(By.className("campaign-price")).getCssValue("color");
-        mpiCampaignPriceColor = mpiCampaignPriceColor.replace("rgba(", "");
+        mpiCampaignPriceColor = mpiCampaignPriceColor.replace("rgba(", ""); // для Chrome
+        mpiCampaignPriceColor = mpiCampaignPriceColor.replace("rgb(", ""); // для FF
         mpiCampaignPriceColor = mpiCampaignPriceColor.replace(")", "");
         mpiCampaignPriceColor = mpiCampaignPriceColor.replace(" ", "");
         aColor = mpiCampaignPriceColor.split(",");
         if (Integer.parseInt(aColor[1]) == 0 && Integer.parseInt(aColor[2]) == 0) mpiCampaignPriceColorIsRed  = true;
 
-        // получили размер текста акционной цены
-        double mpiCampaignPriceTextSize = Double.parseDouble(сampaignsItem.findElement(By.className("campaign-price")).getCssValue("font-size").replace("px" , ""));
+        // получили размер текста акционной цены (px - для Chrome, em - для IE)
+        double mpiCampaignPriceTextSize = Double.parseDouble(сampaignsItem.findElement(By.className("campaign-price")).getCssValue("font-size").replace("px" , "").replace("em" , ""));
 
         сampaignsItem.click();
         isElementPresent(By.id("box-product"));
@@ -73,13 +75,15 @@ public class Task_10 extends TestBase {
 
         // получили свойство Color у обычной цены
         String сRegularPriceColor = itemContent.findElement(By.className("regular-price")).getCssValue("color");
-        сRegularPriceColor = сRegularPriceColor.replace("rgba(", "");
+        сRegularPriceColor = сRegularPriceColor.replace("rgba(", ""); // для Chrome
+        сRegularPriceColor = сRegularPriceColor.replace("rgb(", ""); // для FF
         сRegularPriceColor = сRegularPriceColor.replace(")", "");
         сRegularPriceColor = сRegularPriceColor.replace(" ", "");
         aColor = сRegularPriceColor.split(",");
         if (Integer.parseInt(aColor[0]) == Integer.parseInt(aColor[1]) && Integer.parseInt(aColor[1]) == Integer.parseInt(aColor[2])) сRegularPriceColorIsGray = true;
 
-        double сRegularPriceTextSize = Double.parseDouble(itemContent.findElement(By.className("regular-price")).getCssValue("font-size").replace("px" , ""));
+        // (px - для Chrome, em - для IE)
+        double сRegularPriceTextSize = Double.parseDouble(itemContent.findElement(By.className("regular-price")).getCssValue("font-size").replace("px" , "").replace("em" , ""));
 
         // получили акционную цену товара
         double сCampaignPrice =  Double.parseDouble(itemContent.findElement(By.className("campaign-price")).getText().replace("$",""));
@@ -89,14 +93,15 @@ public class Task_10 extends TestBase {
 
         // получили свойство Color у акционной цены
         String сCampaignPriceColor = itemContent.findElement(By.className("campaign-price")).getCssValue("color");
-        сCampaignPriceColor = сCampaignPriceColor.replace("rgba(", "");
+        сCampaignPriceColor = сCampaignPriceColor.replace("rgba(", ""); // для Chrome
+        сCampaignPriceColor = сCampaignPriceColor.replace("rgb(", ""); // для FF
         сCampaignPriceColor = сCampaignPriceColor.replace(")", "");
         сCampaignPriceColor = сCampaignPriceColor.replace(" ", "");
         aColor = сCampaignPriceColor.split(",");
         if (Integer.parseInt(aColor[1].trim()) == 0 && Integer.parseInt(aColor[2].trim()) == 0) сCampaignPriceColorIsRed  = true;
 
-        // получили размер текста акционной цены
-        double сCampaignPriceTextSize = Double.parseDouble(itemContent.findElement(By.className("campaign-price")).getCssValue("font-size").replace("px" , ""));
+        // получили размер текста акционной цены  (px - для Chrome, em - для IE)
+        double сCampaignPriceTextSize = Double.parseDouble(itemContent.findElement(By.className("campaign-price")).getCssValue("font-size").replace("px" , "").replace("em" , ""));
 
         // сравнили размеры обычной цены и акционной
         if (mpiRegularPriceTextSize >= mpiCampaignPriceTextSize) Assert.assertTrue("акционная цена НЕ крупнее, чем обычная" , false);
