@@ -83,6 +83,9 @@ public class TestBase {
         // driver = null;
     }
 
+    public String getElementText(By locator) {
+        return driver.findElement(locator).getText();
+    }
 
     public void click(By locator){
         driver.findElement(locator).click();
