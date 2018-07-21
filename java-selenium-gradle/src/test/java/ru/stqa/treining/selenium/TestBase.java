@@ -10,11 +10,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class TestBase {
@@ -68,7 +70,8 @@ public class TestBase {
         driver = new ChromeDriver();
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().window().fullscreen();
+        driver.manage().window().maximize();
+
         tlDriver.set(driver);
         System.out.println(((HasCapabilities) driver).getCapabilities());
         wait = new WebDriverWait(driver, 10);
@@ -158,4 +161,47 @@ public class TestBase {
         Select sel = new Select(el);
         sel.selectByIndex(iValue);
     }
+
+    public ExpectedCondition<String> thereIsWindowOtherThan(Set<String> winSet){
+        return new ExpectedCondition<String>(){
+            public String apply(WebDriver driver){
+                Set<String> curWinSet = driver.getWindowHandles();
+                curWinSet.removeAll(winSet);
+                return curWinSet.size() > 0 ? curWinSet.iterator().next() : null;
+            }
+
+        };
+    }
+
+    public void Admin_SelectMenu(String menuPath, String headerName){
+        String[] aMenuPath = menuPath.split(";");
+        Assert.assertTrue("Не корректно указан путь по меню",aMenuPath.length <= 2 && aMenuPath.length > 0);
+
+        List<WebElement> listMenu = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li"));
+
+        for (int i=0; i<listMenu.size(); i++ ){
+            if (listMenu.get(i).getText().equals(aMenuPath[0])){
+                listMenu.get(i).click();
+
+                if (aMenuPath.length==2){
+                    WebElement lm = driver.findElements(By.xpath("//ul[@id='box-apps-menu']/li")).get(i);
+                    List<WebElement> listSubMenu = lm.findElements(By.xpath("./ul/li/a/span"));
+
+                    for (int j=0; j<listSubMenu.size(); j++ ) {
+                        if (listSubMenu.get(j).getText().equals(aMenuPath[1])) {
+                            listSubMenu.get(j).click();
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+
+        }
+        isElementPresent(By.tagName("h1"));
+        Assert.assertTrue(String.format("Название открытого раздела <%s> не соответсвует ожидаемому <%s>",getElementText(By.tagName("h1")),headerName), getElementText(By.tagName("h1")).equals(headerName));
+
+    }
+
+
 }
