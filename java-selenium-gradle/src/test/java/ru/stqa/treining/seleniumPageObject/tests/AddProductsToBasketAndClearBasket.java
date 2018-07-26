@@ -1,7 +1,6 @@
 package ru.stqa.treining.seleniumPageObject.tests;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 public class AddProductsToBasketAndClearBasket extends TestBase{
 

@@ -2,7 +2,6 @@ package ru.stqa.treining.seleniumPageObject.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SessionHelper extends HelperBase{
 
